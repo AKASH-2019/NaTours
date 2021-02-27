@@ -1,0 +1,58 @@
+/* Mixins allow you to define styles that can be re-used throughout your stylesheet. 
+They make it easy to avoid using non-semantic classes like .float-left, and 
+to distribute collections of styles in libraries. */
+
+@mixin  clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);    
+}
+
+// MEDIA QUERY MANAGER
+/*
+0 - 600PX;      phone
+600 - 900px;    Tablet portrait
+900 - 1200px;   Tablet landscape
+[1200 - 1800];  is where our normal styles apply
+1800+ ;         Big desktop
+
+*/
+
+/*@mixin respond-phone {
+    @media (max-width: 600px) { @content };
+}*/
+
+/*
+$breakpoint argument choices:
+-phone
+-tab-port
+-tab-land
+-big-desktop
+1em = 16px
+
+ORDER: Base + typography > general layout + grid > page layout > components
+*/
+
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media (max-width: 37.5em/*600px*/) { @content };   // (600 / 16)
+    }
+    @if $breakpoint == tab-port {
+        @media (max-width: 56.25em/*900px*/) { @content };         // (900 / 16)
+    }
+    @if $breakpoint == tab-land {
+        @media (max-width: 75em/*1200px*/) { @content };       // (1200 / 16)
+    }
+    @if $breakpoint == big-desktop {
+        @media (min-width: 112.5em/*1800px*/) { @content };       // (1800 / 16)
+    }
+}
